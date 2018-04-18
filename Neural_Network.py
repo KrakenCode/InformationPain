@@ -14,14 +14,14 @@ def relu(x, derivative=False):
     return max(0, x)
 
 class Network:
-    def __init__(self, layer_structures, alpha=.001, activation_function=sigmoid):
+    def __init__(self, layer_structures, learning_rate=.001, activation_function=sigmoid):
 
         inputCount = layer_structures[0]
 
         self.inputCount = inputCount
         layerCount = len(layer_structures)
         self.layers = [None] * layerCount
-        self.alpha = alpha
+        self.learning_rate = learning_rate
 
         lastOutput = inputCount
         for i in range(layerCount):
@@ -34,7 +34,7 @@ class Network:
             self.layers[i] = layer
             lastOutput = outputs
 
-    def predict(self, in_set, all_layers=False):
+    def predict(self, in_set, all_layers=False, classification=False):
 
         if all_layers:
             out = [np.array(in_set)]
@@ -50,10 +50,10 @@ class Network:
             for i, layer in enumerate(self.layers):
                 last_out = self.add_bias(sigmoid(np.dot(last_out, layer)))
 
-            return np.delete(last_out, [len(last_out[0])-1], axis=1)
-        
+            return np.argmax(np.delete(last_out, [len(last_out[0])-1], axis=1), axis=1)
+
     def add_bias(self, arr):
-        
+
         b = np.array([np.ones(len(arr))])
         return np.concatenate((arr, b.T), axis=1)
 
@@ -71,7 +71,7 @@ class Network:
                 out.append(last_out)
 
             out_layers = out
-            
+
             out_layers[-1] = np.delete(out_layers[-1], [len(out_layers[-1][0])-1], axis=1)
             #print(out_layers[-1].shape)
 
@@ -80,12 +80,12 @@ class Network:
             last_delta = last_error * sigmoid(out_layers[-1], True)
 
             deltas = [last_delta]
-            
+
             flag = False
 
             for k in range(len(self.layers) - 1, 0, -1):
                 #print(k, "ld", last_delta, '\nld shape', last_delta.shape, "layer shape", self.layers[k].shape)
-                
+
                 if flag:
                     last_delta = last_delta.T[:-1].T
                 else:
@@ -98,23 +98,23 @@ class Network:
 
                 deltas.append(layer_delta)
 
-                
+
             flag = False
             for k in range(len(self.layers) - 1, 0, -1):
                 #print("d", deltas[-k-1].shape, "o", out_layers[k].shape, "w", self.layers[k].shape)
-                
+
                 change = out_layers[k].T.dot(deltas[-k - 1])
-                
+
                 if flag:
                     change = change.T[:-1].T
                 else:
                     flag = True
-                
-                
-                
+
+
+
                 #print("change", change.shape)
-                
-                self.layers[k] += change*self.alpha
+
+                self.layers[k] += change*self.learning_rate
 
     def storage(self):
         out = []
