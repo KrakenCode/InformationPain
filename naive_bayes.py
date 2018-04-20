@@ -13,6 +13,11 @@ class NaiveBayesClassifier:
         self.types = []
         pass
 
+    def __abs(self, x):
+        if(x<0):
+            return -x
+        return x
+
     def __factorial(self, n):
         ans = 1
         for k in range(2,n+1):
@@ -41,9 +46,9 @@ class NaiveBayesClassifier:
 
     def __gaussian_func_generator(self, mu, delta):
         def prob(x):
-            return 0.5*(1+self.__erf((x-mu)/(delta*(2**0.5))))
+            return 0.5*(1+self.__erf(-self.__abs(x-mu)/(delta*(2**0.5))))
         return prob
-    
+
     def fit(self, features, labels):
         #print(self.__factorial(5))
         #print(self.__erf(2.5))
