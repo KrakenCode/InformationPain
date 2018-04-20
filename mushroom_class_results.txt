@@ -1,0 +1,65 @@
+Mushroom Dataset:
+https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/
+
+8124 samples, 22 attributes, classes: edible=e, poisonous=p
+
+
+sklearn.tree.DecisionTreeClassifier:
+# criterion='entropy'
+# input required one hot encoding
+             precision    recall  f1-score   support
+
+          e       1.00      1.00      1.00      4208
+          p       1.00      1.00      1.00      3916
+
+avg / total       1.00      1.00      1.00      8124
+
+
+sklearn.naive_bayes.GaussianNB:
+# input required one hot encoding
+             precision    recall  f1-score   support
+
+          e       1.00      0.91      0.95      4208
+          p       0.91      1.00      0.95      3916
+
+avg / total       0.96      0.95      0.95      8124
+
+
+sklearn.neural_network.MLPClassifier:
+# activation='relu', hidden_layer_sizes=(100,)(default), max_iter=1000
+# input required one hot encoding
+             precision    recall  f1-score   support
+
+          e       1.00      1.00      1.00      4208
+          p       1.00      1.00      1.00      3916
+
+avg / total       1.00      1.00      1.00      8124
+
+
+Our ID3 Decision Tree:
+             precision    recall  f1-score   support
+
+          e       1.00      1.00      1.00      4208
+          p       1.00      1.00      1.00      3916
+
+avg / total       1.00      1.00      1.00      8124
+
+
+Our Naive Bayes:
+             precision    recall  f1-score   support
+
+          e       0.93      0.99      0.96      4208
+          p       0.99      0.91      0.95      3916
+
+avg / total       0.96      0.96      0.96      8124
+
+
+Our Neural Network:
+# activation_function=relu, hidden_layer_sizes=(10,), iterations=1000
+# input required one hot encoding
+             precision    recall  f1-score   support
+
+          e       1.00      1.00      1.00      4208
+          p       1.00      1.00      1.00      3916
+
+avg / total       1.00      1.00      1.00      8124
