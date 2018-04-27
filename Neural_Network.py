@@ -11,8 +11,8 @@ def sigmoid(x, derivative=False):
 
 def relu(x, derivative=False):
     if derivative:
-        return 1
-    return max(0, x)
+        return x/x
+    return np.maximum(x*0, x)
 
 
 class Network:
