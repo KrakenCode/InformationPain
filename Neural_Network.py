@@ -11,7 +11,13 @@ def sigmoid(x, derivative=False):
 
 def relu(x, derivative=False):
     if derivative:
-        return np.ones(x.shape) * np.maximum(x*0, x)
+
+        x = np.copy(x)
+
+        x[x>0] = 1
+        x[x<0] = 0
+ 
+        return x
     return np.maximum(x*0, x)
 
 

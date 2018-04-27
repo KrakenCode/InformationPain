@@ -1,0 +1,40 @@
+Apriori Algorithm
+    generation
+    pruning
+    
+FPGrowth
+
+Decision Tree
+    Know which column to split on based on info gain and other functions 
+
+Know names and concepts of all algorithms 
+
+Classification
+    decision trees 
+    naive bayes 
+    neural networks
+    support vector machines
+
+Clustering
+    kmeans
+    kmediods (PAM)
+        difference between pam and kmedioids 
+    DBSCAN
+    Hierarchical Clustering 
+    single linkage
+    denisty based algorithms (dbscan)
+        epsilon neighborhood
+
+Outliers
+    what are they 
+    how to find 
+        Classification
+        Clustering
+
+Be able to explain how things like info gain work and what they mean
+
+Bring calculator
+
+Data processing not the focus of the final
+
+Chi Square
