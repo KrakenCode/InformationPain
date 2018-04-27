@@ -53,7 +53,7 @@ class Network:
 
             for i, layer in enumerate(self.layers):
                 # TODO: replace sigmoid?
-                last_out = sigmoid(np.dot(last_out, layer))
+                last_out = self.activation_function(np.dot(last_out, layer))
                 out.append(last_out)
 
             return out
@@ -61,9 +61,12 @@ class Network:
             last_out = self.add_bias(np.array(in_set))
             for i, layer in enumerate(self.layers):
                 # TODO: replace sigmoid?
-                last_out = self.add_bias(sigmoid(np.dot(last_out, layer)))
+                last_out = self.add_bias(self.activation_function(np.dot(last_out, layer)))
 
-            return np.argmax(np.delete(last_out, [len(last_out[0])-1], axis=1), axis=1)
+            if classification:
+                return np.argmax(np.delete(last_out, [len(last_out[0])-1], axis=1), axis=1)
+            else:
+                return np.delete(last_out, [len(last_out[0])-1], axis=1)
 
 
     def add_bias(self, arr):
@@ -88,7 +91,7 @@ class Network:
 
             for i, layer in enumerate(self.layers):
                 # TODO: replace sigmoid?
-                last_out = self.add_bias(sigmoid(np.dot(last_out, layer)))
+                last_out = self.add_bias(self.activation_function(np.dot(last_out, layer)))
                 out.append(last_out)
 
             out_layers = out
@@ -97,7 +100,7 @@ class Network:
             last_error = y - out_layers[-1]
 
             # TODO: replace sigmoid?
-            last_delta = last_error * sigmoid(out_layers[-1], True)
+            last_delta = last_error * self.activation_function(out_layers[-1], True)
             deltas = [last_delta]
 
             flag = False
@@ -111,7 +114,7 @@ class Network:
                 layer_error = last_delta.dot(self.layers[k].T)
 
                 # TODO: replace sigmoid?
-                layer_delta = layer_error * sigmoid(out_layers[k], True)
+                layer_delta = layer_error * self.activation_function(out_layers[k], True)
                 last_delta = layer_delta
                 deltas.append(layer_delta)
 
@@ -151,3 +154,15 @@ class Network:
 
     def __str__(self):
         return self.__repr__()
+
+
+if __name__ == '__main__':
+
+    net = Network([2, 3, 1], iterations=1000)
+
+    ins = [[1,1], [0,0], [1,0], [0,1]]
+    outs = [[1], [0], [0], [0]]
+
+    net.fit(ins, outs)
+
+    print(net.predict(ins))
