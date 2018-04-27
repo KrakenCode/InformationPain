@@ -45,14 +45,12 @@ class Network:
             lastOutput = outputs
 
 
-    # TODO: classification flag isn't used??
     def predict(self, in_set, all_layers=False, classification=False):
         if all_layers:
             out = [np.array(in_set)]
             last_out = np.array(in_set)
 
             for i, layer in enumerate(self.layers):
-                # TODO: replace sigmoid?
                 last_out = self.activation_function(np.dot(last_out, layer))
                 out.append(last_out)
 
@@ -60,7 +58,6 @@ class Network:
         else:
             last_out = self.add_bias(np.array(in_set))
             for i, layer in enumerate(self.layers):
-                # TODO: replace sigmoid?
                 last_out = self.add_bias(self.activation_function(np.dot(last_out, layer)))
 
             if classification:
@@ -90,7 +87,6 @@ class Network:
             last_out = self.add_bias(X_to_arr)
 
             for i, layer in enumerate(self.layers):
-                # TODO: replace sigmoid?
                 last_out = self.add_bias(self.activation_function(np.dot(last_out, layer)))
                 out.append(last_out)
 
@@ -99,7 +95,6 @@ class Network:
             #print(out_layers[-1].shape)
             last_error = y - out_layers[-1]
 
-            # TODO: replace sigmoid?
             last_delta = last_error * self.activation_function(out_layers[-1], True)
             deltas = [last_delta]
 
@@ -112,8 +107,6 @@ class Network:
                     flag = True
 
                 layer_error = last_delta.dot(self.layers[k].T)
-
-                # TODO: replace sigmoid?
                 layer_delta = layer_error * self.activation_function(out_layers[k], True)
                 last_delta = layer_delta
                 deltas.append(layer_delta)
