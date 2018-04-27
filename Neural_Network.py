@@ -101,9 +101,9 @@ class Network:
             lastOutput = outputs
         
         
-    def predict(self, in_set, all_layers=False):
+    def predict(self, in_set, classification=True):
 
-        if all_layers:
+        if False:
             out = [np.array(in_set)]
             last_out = np.array(in_set)
 
@@ -116,6 +116,9 @@ class Network:
             last_out = self.add_bias(np.array(in_set))
             for i, layer in enumerate(self.layers):
                 last_out = self.add_bias(self.activation_function(np.dot(last_out, layer)))
+
+            if classification:
+                np.argmax(np.delete(last_out, [len(last_out[0])-1], axis=1), axis=1)
 
             return np.delete(last_out, [len(last_out[0])-1], axis=1)
         
@@ -207,7 +210,7 @@ class Network:
 
 if __name__ == '__main__':
 
-    net = Network([2, 3, 1], iterations=1000)
+    net = Network([2, 3, 1], iterations=10000)
 
     ins = [[1,1], [0,0], [1,0], [0,1]]
     outs = [[1], [0], [0], [0]]
