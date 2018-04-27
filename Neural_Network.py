@@ -118,7 +118,7 @@ class Network:
                 last_out = self.add_bias(self.activation_function(np.dot(last_out, layer)))
 
             if classification:
-                np.argmax(np.delete(last_out, [len(last_out[0])-1], axis=1), axis=1)
+                return np.argmax(np.delete(last_out, [len(last_out[0])-1], axis=1), axis=1)
 
             return np.delete(last_out, [len(last_out[0])-1], axis=1)
         
@@ -210,11 +210,11 @@ class Network:
 
 if __name__ == '__main__':
 
-    net = Network([2, 3, 1], iterations=10000)
+    net = Network([2, 3, 2], iterations=10000)
 
     ins = [[1,1], [0,0], [1,0], [0,1]]
-    outs = [[1], [0], [0], [0]]
+    outs = [[1, 0], [0, 1], [0, 1], [0, 1]]
 
     net.fit(ins, outs)
 
-    print(net.predict(ins))
+    print(net.predict(ins, classification=True))
