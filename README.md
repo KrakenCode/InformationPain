@@ -1,6 +1,12 @@
 # InformationPain
 Data Mining group project
 
+## Contributors
+
+  - Dalton Sumrall
+  - Trase Westbrook
+  - Luke Taylor
+  - Cameron Nguyen
 
 **Requirements**
 ```
